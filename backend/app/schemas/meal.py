@@ -1,7 +1,7 @@
-from typing import Optional, Optional, Any
 """
 MessMate - Meal Schemas
 """
+from typing import Optional
 from datetime import datetime, date
 from pydantic import BaseModel, Field
 

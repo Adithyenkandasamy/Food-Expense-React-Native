@@ -1,7 +1,7 @@
-from typing import Optional, Optional, Any
 """
 MessMate - Settlement Schemas
 """
+from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
 

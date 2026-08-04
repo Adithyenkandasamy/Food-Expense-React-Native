@@ -1,7 +1,7 @@
-from typing import Optional, Optional, Any
 """
 MessMate - Dashboard Schemas
 """
+from typing import Optional
 from datetime import date
 from pydantic import BaseModel
 
