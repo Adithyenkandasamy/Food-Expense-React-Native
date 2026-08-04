@@ -1,0 +1,505 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+
+@import "nativewind/theme";
+
+@theme {
+    /* ── Colors: Premium B&W Palette ── */
+    --color-background: #FFFFFF;
+    --color-dark-background: #09090B;
+    --color-card: #FFFFFF;
+    --color-dark-card: #18181B;
+    --color-foreground: #09090B;
+    --color-primary: #09090B;
+    --color-secondary: #71717A;
+    --color-muted: #F4F4F5;
+    --color-muted-foreground: #71717A;
+    --color-border: #E4E4E7;
+    --color-dark-border: #27272A;
+    --color-accent: #18181B;
+    --color-success: #22C55E;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+    --color-destructive: #EF4444;
+
+    /* ── Spacing: 8px System ── */
+    --spacing-0: 0px;
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-5: 20px;
+    --spacing-6: 24px;
+    --spacing-7: 28px;
+    --spacing-8: 32px;
+    --spacing-9: 36px;
+    --spacing-10: 40px;
+    --spacing-11: 44px;
+    --spacing-12: 48px;
+    --spacing-14: 56px;
+    --spacing-16: 64px;
+    --spacing-18: 72px;
+    --spacing-20: 80px;
+    --spacing-24: 96px;
+    --spacing-30: 120px;
+
+    /* ── Typography ── */
+    --font-sans: sans-regular;
+    --font-sans-light: sans-light;
+    --font-sans-medium: sans-medium;
+    --font-sans-semibold: sans-semibold;
+    --font-sans-bold: sans-bold;
+    --font-sans-extrabold: sans-extrabold;
+}
+
+@layer components {
+
+    /* ═══════════════════════════════════
+       TAB BAR
+    ═══════════════════════════════════ */
+    .tabs-bar {
+        @apply bg-card border-t border-border;
+    }
+
+    .tabs-icon {
+        @apply size-12 items-center justify-center;
+    }
+
+    .tabs-pill {
+        @apply size-11 items-center justify-center rounded-xl bg-transparent;
+    }
+
+    .tabs-active {
+        @apply bg-muted;
+    }
+
+    .tabs-glyph {
+        @apply size-5;
+    }
+
+    .tabs-label {
+        @apply text-[10px] font-sans-semibold text-muted-foreground mt-0.5;
+    }
+
+    .tabs-label-active {
+        @apply text-primary;
+    }
+
+    /* ═══════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════ */
+    .btn-primary {
+        @apply items-center justify-center rounded-xl bg-primary py-4 px-6;
+    }
+
+    .btn-primary-text {
+        @apply text-base font-sans-bold text-white;
+    }
+
+    .btn-secondary {
+        @apply items-center justify-center rounded-xl bg-card border border-border py-4 px-6;
+    }
+
+    .btn-secondary-text {
+        @apply text-base font-sans-semibold text-primary;
+    }
+
+    .btn-outline {
+        @apply items-center justify-center rounded-xl border border-border py-3 px-5;
+    }
+
+    .btn-outline-text {
+        @apply text-sm font-sans-semibold text-primary;
+    }
+
+    .btn-danger {
+        @apply items-center justify-center rounded-xl bg-danger py-4 px-6;
+    }
+
+    .btn-danger-text {
+        @apply text-base font-sans-bold text-white;
+    }
+
+    .btn-disabled {
+        @apply opacity-40;
+    }
+
+    /* ═══════════════════════════════════
+       INPUT / FORM
+    ═══════════════════════════════════ */
+    .field-label {
+        @apply text-sm font-sans-semibold text-primary mb-1.5;
+    }
+
+    .field-input {
+        @apply rounded-xl border border-border bg-card px-4 py-3.5 text-base font-sans-medium text-primary;
+    }
+
+    .field-input-focus {
+        @apply border-primary;
+    }
+
+    .field-input-error {
+        @apply border-danger;
+    }
+
+    .field-error {
+        @apply text-xs font-sans-medium text-danger mt-1;
+    }
+
+    .field-helper {
+        @apply text-xs font-sans-medium text-muted-foreground mt-1;
+    }
+
+    /* ═══════════════════════════════════
+       AUTH SCREENS
+    ═══════════════════════════════════ */
+    .auth-safe-area {
+        @apply flex-1 bg-background;
+    }
+
+    .auth-screen {
+        @apply flex-1 bg-background;
+    }
+
+    .auth-scroll {
+        @apply flex-1;
+    }
+
+    .auth-content {
+        @apply flex-grow px-6 pb-10 pt-12;
+    }
+
+    .auth-brand {
+        @apply mb-10;
+    }
+
+    .auth-logo-mark {
+        @apply w-11 h-11 rounded-xl bg-primary items-center justify-center mb-6;
+    }
+
+    .auth-logo-mark-text {
+        @apply text-xl font-sans-extrabold text-white;
+    }
+
+    .auth-title {
+        @apply text-3xl font-sans-bold text-primary;
+    }
+
+    .auth-subtitle {
+        @apply mt-2 text-base font-sans-medium text-muted-foreground;
+    }
+
+    .auth-form {
+        @apply mt-8 gap-5;
+    }
+
+    .auth-link-row {
+        @apply mt-8 flex-row items-center justify-center gap-1;
+    }
+
+    .auth-link-copy {
+        @apply text-sm font-sans-medium text-muted-foreground;
+    }
+
+    .auth-link {
+        @apply text-sm font-sans-bold text-primary;
+    }
+
+    /* ═══════════════════════════════════
+       CARDS
+    ═══════════════════════════════════ */
+    .card {
+        @apply rounded-2xl border border-border bg-card p-4;
+    }
+
+    .card-lg {
+        @apply rounded-2xl border border-border bg-card p-5;
+    }
+
+    /* Balance card – dark */
+    .balance-card {
+        @apply rounded-2xl bg-primary p-6;
+    }
+
+    .balance-label {
+        @apply text-sm font-sans-medium text-white opacity-60;
+    }
+
+    .balance-amount {
+        @apply text-4xl font-sans-bold text-white mt-1;
+    }
+
+    .balance-meta {
+        @apply text-xs font-sans-medium text-white opacity-60 mt-0.5;
+    }
+
+    /* Expense card */
+    .expense-card {
+        @apply rounded-2xl border border-border bg-card p-4 flex-row items-center;
+    }
+
+    .expense-icon-wrap {
+        @apply w-10 h-10 rounded-xl bg-muted items-center justify-center mr-3;
+    }
+
+    .expense-title {
+        @apply text-sm font-sans-semibold text-primary;
+    }
+
+    .expense-meta {
+        @apply text-xs font-sans-medium text-muted-foreground mt-0.5;
+    }
+
+    .expense-amount {
+        @apply text-sm font-sans-bold text-primary;
+    }
+
+    /* Settlement card */
+    .settlement-card {
+        @apply rounded-2xl border border-border bg-card p-4;
+    }
+
+    .settlement-badge {
+        @apply px-2.5 py-1 rounded-full;
+    }
+
+    .settlement-badge-pending {
+        @apply bg-warning/10;
+    }
+
+    .settlement-badge-closed {
+        @apply bg-success/10;
+    }
+
+    /* Meal card */
+    .meal-card {
+        @apply rounded-2xl border border-border bg-card p-4 flex-row items-center justify-between;
+    }
+
+    /* Member card */
+    .member-card {
+        @apply rounded-2xl border border-border bg-card p-4 flex-row items-center;
+    }
+
+    /* Stat card */
+    .stat-card {
+        @apply rounded-xl bg-muted p-4 flex-1;
+    }
+
+    .stat-value {
+        @apply text-2xl font-sans-bold text-primary;
+    }
+
+    .stat-label {
+        @apply text-xs font-sans-medium text-muted-foreground mt-0.5;
+    }
+
+    /* ═══════════════════════════════════
+       SECTION HEADER
+    ═══════════════════════════════════ */
+    .section-header {
+        @apply flex-row items-center justify-between mb-3;
+    }
+
+    .section-title {
+        @apply text-base font-sans-bold text-primary;
+    }
+
+    .section-action {
+        @apply text-sm font-sans-semibold text-muted-foreground;
+    }
+
+    /* ═══════════════════════════════════
+       SEARCH BAR
+    ═══════════════════════════════════ */
+    .search-bar {
+        @apply flex-row items-center bg-muted rounded-xl px-3 py-3 gap-2;
+    }
+
+    .search-input {
+        @apply flex-1 text-sm font-sans-medium text-primary;
+    }
+
+    /* ═══════════════════════════════════
+       EMPTY STATE
+    ═══════════════════════════════════ */
+    .empty-state {
+        @apply items-center py-16 px-6;
+    }
+
+    .empty-icon {
+        @apply w-14 h-14 rounded-2xl bg-muted items-center justify-center mb-4;
+    }
+
+    .empty-title {
+        @apply text-base font-sans-bold text-primary text-center;
+    }
+
+    .empty-desc {
+        @apply text-sm font-sans-medium text-muted-foreground text-center mt-1.5;
+    }
+
+    /* ═══════════════════════════════════
+       FAB (Floating Action Button)
+    ═══════════════════════════════════ */
+    .fab {
+        @apply absolute bottom-28 right-5 w-14 h-14 rounded-full bg-primary items-center justify-center;
+    }
+
+    /* ═══════════════════════════════════
+       APP BAR
+    ═══════════════════════════════════ */
+    .app-bar {
+        @apply flex-row items-center justify-between px-5 pt-2 pb-4;
+    }
+
+    .app-bar-title {
+        @apply text-xl font-sans-bold text-primary;
+    }
+
+    .app-bar-action {
+        @apply w-9 h-9 rounded-xl bg-muted items-center justify-center;
+    }
+
+    /* ═══════════════════════════════════
+       NOTIFICATION BADGE
+    ═══════════════════════════════════ */
+    .notif-badge {
+        @apply absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-danger border border-white;
+    }
+
+    /* ═══════════════════════════════════
+       AVATAR
+    ═══════════════════════════════════ */
+    .avatar-sm {
+        @apply w-8 h-8 rounded-full bg-muted items-center justify-center;
+    }
+
+    .avatar-md {
+        @apply w-10 h-10 rounded-full bg-muted items-center justify-center;
+    }
+
+    .avatar-lg {
+        @apply w-14 h-14 rounded-full bg-muted items-center justify-center;
+    }
+
+    .avatar-xl {
+        @apply w-20 h-20 rounded-full bg-muted items-center justify-center;
+    }
+
+    .avatar-text {
+        @apply font-sans-bold text-primary;
+    }
+
+    /* ═══════════════════════════════════
+       SKELETON
+    ═══════════════════════════════════ */
+    .skeleton {
+        @apply bg-muted rounded-xl;
+    }
+
+    /* ═══════════════════════════════════
+       DIVIDER
+    ═══════════════════════════════════ */
+    .divider {
+        @apply h-px bg-border my-4;
+    }
+
+    /* ═══════════════════════════════════
+       CHIP / FILTER PILL
+    ═══════════════════════════════════ */
+    .chip {
+        @apply px-4 py-2 rounded-full border border-border bg-card;
+    }
+
+    .chip-active {
+        @apply border-primary bg-primary;
+    }
+
+    .chip-text {
+        @apply text-xs font-sans-semibold text-muted-foreground;
+    }
+
+    .chip-text-active {
+        @apply text-white;
+    }
+
+    /* ═══════════════════════════════════
+       ROLE BADGE
+    ═══════════════════════════════════ */
+    .role-badge {
+        @apply px-2 py-0.5 rounded-full;
+    }
+
+    .role-badge-admin {
+        @apply bg-primary;
+    }
+
+    .role-badge-member {
+        @apply bg-muted;
+    }
+
+    .role-badge-text-admin {
+        @apply text-[10px] font-sans-bold text-white;
+    }
+
+    .role-badge-text-member {
+        @apply text-[10px] font-sans-bold text-muted-foreground;
+    }
+
+    /* ═══════════════════════════════════
+       QUICK ACTION BUTTON
+    ═══════════════════════════════════ */
+    .quick-action {
+        @apply flex-1 items-center py-3 rounded-xl bg-muted gap-1.5;
+    }
+
+    .quick-action-text {
+        @apply text-xs font-sans-semibold text-primary;
+    }
+
+    /* ═══════════════════════════════════
+       SETTINGS ROW
+    ═══════════════════════════════════ */
+    .settings-row {
+        @apply flex-row items-center justify-between py-4 border-b border-border;
+    }
+
+    .settings-label {
+        @apply text-sm font-sans-medium text-primary;
+    }
+
+    /* ═══════════════════════════════════
+       MODAL BOTTOM SHEET
+    ═══════════════════════════════════ */
+    .modal-overlay {
+        @apply flex-1 bg-black/50;
+    }
+
+    .modal-sheet {
+        @apply mt-auto max-h-[90%] rounded-t-3xl bg-background pt-2;
+    }
+
+    .modal-handle {
+        @apply w-10 h-1 rounded-full bg-border self-center mb-4;
+    }
+
+    .modal-header {
+        @apply flex-row items-center justify-between px-5 pb-4 border-b border-border;
+    }
+
+    .modal-title {
+        @apply text-lg font-sans-bold text-primary;
+    }
+
+    .modal-body {
+        @apply p-5 gap-5;
+    }
+
+    /* home placeholder – keep for compat */
+    .home-empty-state {
+        @apply py-4 text-sm font-sans-medium text-muted-foreground;
+    }
+}
