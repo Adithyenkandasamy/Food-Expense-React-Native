@@ -18,7 +18,7 @@ from app.schemas.auth import MessageResponse
 from app.crud import group as group_crud
 from app.crud import user as user_crud
 
-router = APIRouter(prefix="/api/groups", tags=["Groups"])
+router = APIRouter()
 
 
 @router.post("", response_model=GroupResponse, status_code=status.HTTP_201_CREATED)

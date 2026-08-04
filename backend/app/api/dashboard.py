@@ -18,7 +18,7 @@ from app.crud import group as group_crud
 from app.crud import meal as meal_crud
 from app.crud import expense as expense_crud
 
-router = APIRouter(prefix="/api/dashboard", tags=["Dashboard"])
+router = APIRouter()
 
 
 @router.get("/{group_id}", response_model=DashboardResponse)

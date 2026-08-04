@@ -1,7 +1,7 @@
-from typing import Optional, Optional, Any
 """
 MessMate - Auth Schemas
 """
+from typing import Optional, Any
 from pydantic import BaseModel, EmailStr, Field
 
 

@@ -7,7 +7,7 @@ from app.core.deps import DBSession, CurrentUser
 from app.schemas.user import UserResponse, UserUpdate
 from app.crud import user as user_crud
 
-router = APIRouter(prefix="/api/users", tags=["Users"])
+router = APIRouter()
 
 
 @router.get("/me", response_model=UserResponse)

@@ -9,7 +9,7 @@ from app.schemas.auth import MessageResponse
 from app.crud import expense as expense_crud
 from app.crud import group as group_crud
 
-router = APIRouter(prefix="/api/expenses", tags=["Expenses"])
+router = APIRouter()
 
 
 @router.post("", response_model=ExpenseResponse, status_code=status.HTTP_201_CREATED)

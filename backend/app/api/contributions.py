@@ -9,7 +9,7 @@ from app.schemas.auth import MessageResponse
 from app.crud import contribution as contribution_crud
 from app.crud import group as group_crud
 
-router = APIRouter(prefix="/api/contributions", tags=["Contributions"])
+router = APIRouter()
 
 
 @router.post("", response_model=ContributionResponse, status_code=status.HTTP_201_CREATED)

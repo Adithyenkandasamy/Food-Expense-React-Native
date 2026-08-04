@@ -19,7 +19,7 @@ from app.schemas.auth import (
 from app.schemas.user import UserResponse
 from app.crud import user as user_crud
 
-router = APIRouter(prefix="/api/auth", tags=["Authentication"])
+router = APIRouter()
 
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)

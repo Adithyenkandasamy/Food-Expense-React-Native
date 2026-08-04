@@ -16,7 +16,7 @@ from app.schemas.meal import (
 from app.crud import meal as meal_crud
 from app.crud import group as group_crud
 
-router = APIRouter(prefix="/api/meals", tags=["Meals"])
+router = APIRouter()
 
 
 @router.post("", response_model=MealResponse, status_code=status.HTTP_201_CREATED)

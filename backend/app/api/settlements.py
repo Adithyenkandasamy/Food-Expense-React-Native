@@ -1,72 +1,82 @@
 """
-MessMate - Settlements API
+MessMate - Settlements API Routes
+Calculate, view, and close monthly settlements.
 """
-from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException, status, Query
 
-from app.core.deps import get_db, get_current_user
-from app.models.user import User
+from app.core.deps import DBSession, CurrentUser
 from app.schemas.settlement import SettlementResponse, SettlementCreate
-from app.crud import settlement as crud_settlement
-from app.crud import group as crud_group
+from app.schemas.auth import MessageResponse
+from app.crud import settlement as settlement_crud
+from app.crud import group as group_crud
 
 router = APIRouter()
 
 
-@router.post("/groups/{group_id}/calculate", response_model=SettlementResponse)
-def calculate_and_save_settlement(
-    group_id: int,
-    month: int,
-    year: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    """
-    Calculate and generate a settlement for a specific month and year for a group.
-    Only group admins can do this.
-    """
-    # Verify group and admin status
-    group_member = crud_group.get_group_member(db, group_id=group_id, user_id=current_user.id)
-    if not group_member:
-        raise HTTPException(status_code=404, detail="Group not found or you are not a member")
-    
-    if group_member.role != "admin":
+@router.post("", response_model=SettlementResponse, status_code=status.HTTP_201_CREATED)
+def create_settlement(data: SettlementCreate, current_user: CurrentUser, db: DBSession):
+    """Calculate and save a monthly settlement. Admin only."""
+    if not group_crud.is_admin(db, data.group_id, current_user.id):
         raise HTTPException(status_code=403, detail="Only admins can generate settlements")
-        
+
     # Check if settlement already exists for this period
-    existing = crud_settlement.get_group_settlements(db, group_id=group_id)
-    for ext in existing:
-        if ext.month == month and ext.year == year:
-            return ext
-            
-    # Calculate settlement data
-    try:
-        settlement_data = crud_settlement.calculate_settlement(db, group_id=group_id, month=month, year=year)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-        
-    if not settlement_data:
-        raise HTTPException(status_code=400, detail="Cannot calculate settlement (no data)")
+    existing = settlement_crud.get_group_settlements(db, data.group_id)
+    for s in existing:
+        if s.month == data.month and s.year == data.year:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Settlement already exists for {data.month}/{data.year}",
+            )
 
-    # Save settlement
-    obj = SettlementCreate(
-        group_id=group_id,
-        month=month,
-        year=year,
-        settlement_data=settlement_data
+    settlement = settlement_crud.create_settlement(
+        db=db,
+        group_id=data.group_id,
+        month=data.month,
+        year=data.year,
+        created_by=current_user.id,
     )
-    return crud_settlement.create_settlement(db, obj=obj, generated_by_id=current_user.id)
+    return settlement
 
 
-@router.get("/groups/{group_id}", response_model=list[SettlementResponse])
-def list_group_settlements(
-    group_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+@router.get("", response_model=list[SettlementResponse])
+def list_settlements(
+    group_id: int = Query(...),
+    current_user: CurrentUser = None,
+    db: DBSession = None,
 ):
-    group_member = crud_group.get_group_member(db, group_id=group_id, user_id=current_user.id)
-    if not group_member:
-        raise HTTPException(status_code=404, detail="Not found")
-        
-    return crud_settlement.get_group_settlements(db, group_id=group_id)
+    """List all settlements for a group."""
+    membership = group_crud.get_membership(db, group_id, current_user.id)
+    if not membership:
+        raise HTTPException(status_code=403, detail="You are not a member of this group")
+
+    return settlement_crud.get_group_settlements(db, group_id)
+
+
+@router.get("/{settlement_id}", response_model=SettlementResponse)
+def get_settlement(settlement_id: int, current_user: CurrentUser, db: DBSession):
+    """Get a specific settlement."""
+    settlement = settlement_crud.get_settlement_by_id(db, settlement_id)
+    if not settlement:
+        raise HTTPException(status_code=404, detail="Settlement not found")
+
+    membership = group_crud.get_membership(db, settlement.group_id, current_user.id)
+    if not membership:
+        raise HTTPException(status_code=403, detail="You are not a member of this group")
+
+    return settlement
+
+
+@router.put("/{settlement_id}/close", response_model=SettlementResponse)
+def close_settlement(settlement_id: int, current_user: CurrentUser, db: DBSession):
+    """Close a pending settlement. Admin only."""
+    settlement = settlement_crud.get_settlement_by_id(db, settlement_id)
+    if not settlement:
+        raise HTTPException(status_code=404, detail="Settlement not found")
+
+    if not group_crud.is_admin(db, settlement.group_id, current_user.id):
+        raise HTTPException(status_code=403, detail="Only admins can close settlements")
+
+    if settlement.status == "closed":
+        raise HTTPException(status_code=400, detail="Settlement is already closed")
+
+    return settlement_crud.close_settlement(db, settlement)
