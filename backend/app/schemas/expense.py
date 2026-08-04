@@ -2,7 +2,7 @@
 MessMate - Expense Schemas
 """
 from datetime import datetime, date
-from typing import Optional, Optional
+from typing import Optional
 from pydantic import BaseModel, Field
 
 from app.schemas.user import UserBrief
